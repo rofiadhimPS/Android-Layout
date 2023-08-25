@@ -2,6 +2,7 @@ package expertcoding.simplegetapi
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import expertcoding.simplegetapi.adapter.PhotoAdapter
@@ -29,8 +30,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun fetchDataFromApi() {
         apiService.getPhotos { photos ->
+            Log.d("PhotoApp", "Total Photos: ${photos.size}")
             photoAdapter = PhotoAdapter(photos)
-            photoRecyclerView.adapter = photoAdapter
+            val recyclerView = findViewById<RecyclerView>(R.id.photoRecyclerView)
+            recyclerView.adapter = photoAdapter // Mengatur adapter dengan data baru
+            photoAdapter.notifyDataSetChanged() // Memperbarui tampilan RecyclerView
         }
     }
 }
